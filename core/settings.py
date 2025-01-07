@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/5.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.1/ref/settings/
 """
+from decouple import config
 from django.templatetags.static import static
 from django.urls import reverse_lazy
 from django.utils.translation import gettext_lazy as _
@@ -22,12 +23,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-2)_7c*x*)3&@t+vuvvkm15z9ff@i1wx-wj-n)%g^6l69#*kj16'
 
+SECRET_KEY = config('SECRET_KEY',default="hjg^&%**%%^*GHVGJHGKJGKH")
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+DEBUG = config('DEBUG',default=False,cast=bool)
+ALLOWED_HOSTS = ['*'] #config('ALLOWED_HOSTS','').split(',')
 
 
 # Application definition
@@ -90,11 +90,16 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    "default": {
+        "ENGINE": config("DB_ENGINE",default="django.db.backends.sqlite3"),
+        "NAME": config("DB_NAME",default=BASE_DIR / "db.sqlite4"),
+        "USER":config("DB_USER",default=''),
+        "PASSWORD":config("DB_PASSWORD",default=''),
+        "HOST":config("DB_HOST",default=''),
+        "PORT":config("DB_PORT",default='')
     }
 }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -130,7 +135,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = "static/"
+STATIC_ROOT = BASE_DIR / "static"
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / "media"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -139,8 +148,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # UNFOLD_ADMIN_THEME = 'light'
 UNFOLD = {
-    "SITE_TITLE":"Online Savdo",
-    "SITE_HEADER": "Online Savdo",
+    "SITE_TITLE":"Dreams Shop",
+    "SITE_HEADER": "Dreams Shop",
     # "SITE_ICON": {
     #     "light": lambda request: static("icon-light.svg"),  # light mode
     #     "dark": lambda request: static("icon-dark.svg"),  # dark mode
@@ -252,6 +261,11 @@ UNFOLD = {
                         "title":"To'lovlar",
                         "icon":"attach_money",
                         "link":reverse_lazy("admin:payment_payment_changelist")
+                    },
+                    {
+                        "title":"To'lov statistikasi",
+                        "icon":"grade",
+                        "link":reverse_lazy("admin:payment_payment_stat")
                     }
                 ]
             }
