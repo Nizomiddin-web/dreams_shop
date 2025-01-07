@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Statistika Paneli</h1>
+<ul>
+    <li>Mahsulotlar soni: {{ product_count }}</li>
+    <li>Buyurtmalar soni: {{ order_count }}</li>
+    <li>Mijozlar soni: {{ customer_count }}</li>
+    <li>Jami buyurtma summasi: {{ total_order_value }} so'm</li>
+</ul>
+<h2>Top Mahsulotlar:</h2>
+<ul>
+    {% for product in top_products %}
+    <li>{{ product.name }} - {{ product.total_orders }} ta buyurtma</li>
+    {% endfor %}
+</ul>
+</body>
+</html>

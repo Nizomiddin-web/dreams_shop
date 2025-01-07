@@ -1,0 +1,179 @@
+{% extends 'unfold/layouts/base.html' %}
+
+
+{% block breadcrumbs %}
+
+{% endblock %}
+
+{% block title %}
+    {% if subtitle %}
+        {{ subtitle }} |
+    {% endif %}
+
+    {{ title }} | {{ site_title|default:_('Django site admin') }}
+{% endblock %}
+
+{% block branding %}
+    <h1 id="site-name">
+        <a href="{% url 'admin:index' %}">
+            {{ site_header|default:_('Django administration') }}
+        </a>
+    </h1>
+{% endblock %}
+
+{% block content %}
+  <div class="text-xl font-bold mb-2">Umumiy Statistika</div>
+  <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
+  <div
+    class="min-w-0 rounded-lg shadow-2xl overflow-hidden bg-gray-100 rounded dark:bg-gray-800"
+  >
+    <div class="p-4 flex items-center">
+      <div
+        class="p-3 rounded-full text-orange-500 dark:text-orange-100 bg-orange-100 dark:bg-orange-500 mr-4"
+      >
+        <img width="48" height="48" src="https://img.icons8.com/stickers/48/crowd-skin-type-1.png" alt="crowd-skin-type-1"/>
+      </div>
+      <div>
+        <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
+          Umumiy Mijozlar
+        </p>
+        <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
+          {{ customer_count }} ta
+        </p>
+      </div>
+    </div>
+  </div>
+  <div
+    class="min-w-0 rounded-lg shadow-xs rounded overflow-hidden bg-gray-100 dark:bg-gray-800"
+  >
+    <div class="p-4 flex items-center">
+      <div
+        class="p-3 rounded-full text-green-500 dark:text-green-100 bg-green-100 dark:bg-green-500 mr-4"
+      >
+        <img width="48" height="48" src="https://img.icons8.com/parakeet/48/money-bag.png" alt="money-bag"/>
+      </div>
+      <div>
+        <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
+          Jami To'langan
+        </p>
+        <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
+           {{payed_sum}}
+        </p>
+      </div>
+    </div>
+  </div>
+  <div
+    class="min-w-0 rounded-lg shadow-xs rounded overflow-hidden bg-gray-100 dark:bg-gray-800"
+  >
+    <div class="p-4 flex items-center">
+      <div
+        class="p-3 rounded-full text-blue-500 dark:text-blue-100 bg-blue-100 dark:bg-blue-500 mr-4"
+      >
+        <img width="48" height="48" src="https://img.icons8.com/arcade/48/add-shopping-cart.png" alt="add-shopping-cart"/>
+      </div>
+      <div>
+        <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
+          Barcha Buyurtmalar
+        </p>
+        <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
+          {{all_order_count}} ta
+        </p>
+      </div>
+    </div>
+  </div>
+  <div
+    class="min-w-0 rounded-lg shadow-xs rounded overflow-hidden bg-gray-100 dark:bg-gray-800"
+  >
+    <div class="p-4 flex items-center">
+      <div
+        class="p-3 rounded-full text-teal-500 dark:text-teal-100 bg-teal-100 dark:bg-teal-500 mr-4"
+      >
+       <img width="48" height="48" src="https://img.icons8.com/arcade/48/box.png" alt="box"/>
+      </div>
+      <div>
+        <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
+          Barcha Mahsulotlar
+        </p>
+        <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">{{product_count}} ta</p>
+      </div>
+    </div>
+  </div>
+</div>
+  <div class="text-xl font-bold mb-2">To'lov hisobotlari</div>
+  <div class="grid gap-6 mb-8 md:grid-cols-2 xl:grid-cols-4">
+  <div
+    class="min-w-0 rounded-lg shadow-2xl overflow-hidden bg-gray-100 rounded dark:bg-gray-800"
+  >
+    <div class="p-4 flex items-center">
+      <div
+        class="p-3 rounded-full text-orange-500 dark:text-orange-100 bg-orange-100 dark:bg-orange-500 mr-4"
+      >
+        <img width="48" height="48" src="https://img.icons8.com/3d-fluency/48/money-bag.png" alt="money-bag"/>
+      </div>
+      <div>
+        <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
+          Umumiy To'lovlar
+        </p>
+        <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
+          {{ payed_sum }}
+        </p>
+      </div>
+    </div>
+  </div>
+  <div
+    class="min-w-0 rounded-lg shadow-xs rounded overflow-hidden bg-gray-100 dark:bg-gray-800"
+  >
+    <div class="p-4 flex items-center">
+      <div
+        class="p-3 rounded-full text-green-500 dark:text-green-100 bg-green-100 dark:bg-green-500 mr-4"
+      >
+        <img width="48" height="48" src="https://img.icons8.com/3d-fluency/48/card-wallet.png" alt="card-wallet"/>
+      </div>
+      <div>
+        <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
+          Karta orqali To'langan
+        </p>
+        <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
+           {{card_total_sum}}
+        </p>
+      </div>
+    </div>
+  </div>
+  <div
+    class="min-w-0 rounded-lg shadow-xs rounded overflow-hidden bg-gray-100 dark:bg-gray-800"
+  >
+    <div class="p-4 flex items-center">
+      <div
+        class="p-3 rounded-full text-blue-500 dark:text-blue-100 bg-blue-100 dark:bg-blue-500 mr-4"
+      >
+        <img width="48" height="48" src="https://img.icons8.com/3d-fluency/48/money.png" alt="money"/>
+      </div>
+      <div>
+        <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
+          Naqt to'lovlar
+        </p>
+        <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">
+          {{cash_total_sum}}
+        </p>
+      </div>
+    </div>
+  </div>
+  <div
+    class="min-w-0 rounded-lg shadow-xs rounded overflow-hidden bg-gray-100 dark:bg-gray-800"
+  >
+    <div class="p-4 flex items-center">
+      <div
+        class="p-3 rounded-full text-teal-500 dark:text-teal-100 bg-teal-100 dark:bg-teal-500 mr-4"
+      >
+       <img width="48" height="48" src="https://img.icons8.com/arcade/48/post-office.png" alt="post-office"/>
+      </div>
+      <div>
+        <p class="mb-2 text-sm font-medium text-gray-600 dark:text-gray-400">
+          Pochta orqali to'langan
+        </p>
+        <p class="text-lg font-semibold text-gray-700 dark:text-gray-200">{{mail_total_sum}}</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
