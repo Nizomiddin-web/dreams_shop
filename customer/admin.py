@@ -65,19 +65,18 @@ class CustomerAdmin(ModelAdmin,ImportExportModelAdmin):
 
 @admin.register(Address)
 class AddressAdmin(ModelAdmin):
-    list_display = ['id','customer_fullname','customer_phone','phone','city','state','address_line']
-    list_display_links = ['id','customer_fullname','customer_phone']
-    search_fields = ['customer__first_name','customer__last_name','customer__phone_number','city','state','address_line']
-    autocomplete_fields = ['customer']
+    list_display = ['id','city','address_line','phone']
+    list_display_links = ['id','city','address_line']
+    search_fields = ['city','address_line']
     list_per_page = 10
-    @display(description="Mijoz")
-    def customer_fullname(self,obj):
-        return obj.customer.full_name()
+    # @display(description="Mijoz")
+    # def customer_fullname(self,obj):
+    #     return obj.customer.full_name()
 
-    @display(description="Telefon raqam")
-    def customer_phone(self,obj):
-        return obj.customer.phone_number
-
+    # @display(description="Telefon raqam")
+    # def customer_phone(self,obj):
+    #     return obj.customer.phone_number
+    #
 
 class CustomAdminSite(admin.AdminSite):
     site_header = "Statistika Paneli"

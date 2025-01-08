@@ -101,7 +101,7 @@ class OrderItemAdmin(ModelAdmin):
 
 @admin.register(Order)
 class OrderAdmin(ModelAdmin):
-    list_display = ['id','get_customer_fullname','get_customer_phone','get_address','get_created_at','status_custom_color','payment_method','is_paid']
+    list_display = ['id','get_customer_fullname','get_customer_phone','get_address','get_order_products','get_created_at','status_custom_color','payment_method','is_paid']
     search_fields = ['id','customer__phone_number','customer__first_name']
     inlines = [OrderItemTabular,PaymentTabular]
     list_display_links = ['get_customer_fullname']
@@ -130,17 +130,25 @@ class OrderAdmin(ModelAdmin):
             StatusChoice.SHIPPED: 'warning',
             StatusChoice.GET_TOMORROW: 'warning',
             StatusChoice.HOLD: 'neutral',
+            StatusChoice.READY_DELIVERY: 'info',
         }
     )
     def status_custom_color(self,obj):
         return obj.status, obj.get_status_display()
+
+    @display(description="Mahsulotlar")
+    def get_order_products(self,obj):
+        product_name = ''
+        for item in obj.items.all():
+            product_name+=item.product.name+', '
+        return product_name
 
     def get_customer_fullname(self,obj):
         return obj.customer.full_name()
     get_customer_fullname.short_description = 'Mijoz'
 
     def get_address(self,obj):
-        return f"{obj.address.city}, {obj.address.state}, {obj.address.address_line}"
+        return f"{obj.address.city}, {obj.address.address_line}"
 
     get_address.short_description = 'Address'
 

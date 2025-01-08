@@ -42,16 +42,16 @@ class Customer(models.Model):
         verbose_name_plural = 'Mijozlar'
 
 class Address(models.Model):
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name="addresses",verbose_name='Mijoz')
+    # customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name="addresses",verbose_name='Mijoz')
     city = models.CharField(max_length=100,verbose_name="Viloyat",choices=CityChoice.choices)
-    state = models.CharField(max_length=100,verbose_name='Shahar')
+    # state = models.CharField(max_length=100,verbose_name='Shahar')
     address_line = models.CharField(max_length=255,verbose_name="Manzil")
     postal_code = models.CharField(max_length=20,null=True,blank=True,verbose_name='Pochta indeksi')
     phone = models.CharField(max_length=15, blank=True, null=True,verbose_name="Telefon raqam(qo'shimcha)")  # Qo‘shimcha telefon
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.customer}, {self.city}, {self.state}, {self.address_line}"
+        return f"{self.city}, {self.address_line}"
 
     class Meta:
         db_table = 'address'

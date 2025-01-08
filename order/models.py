@@ -7,6 +7,7 @@ class StatusChoice(models.TextChoices):
     GET_TOMORROW = 'get_tomorrow', "🤥 Keyin oladi"
     HOLD = 'hold', "🗳 Zakazga"
     PENDING = 'pending',"📦 Qabul qilindi"
+    READY_DELIVERY = 'ready_delivery',"🛍 Dastavkaga Tayyor"
     SHIPPED = 'shipped',"🚚 Yetkazilmoqda (Yo'lda)"
     DELIVERED = 'delivered',"Yetkazib berildi✅"
     CANCELED = 'canceled',"❌ Bekor qilindi"
@@ -24,6 +25,7 @@ class Order(models.Model):
     payment_method = models.CharField(max_length=50,null=True,blank=True,choices=PaymentMethodChoice.choices,verbose_name="To'lov turi")
     discount = models.DecimalField(decimal_places=2,max_digits=10,verbose_name="Chegirma summasi",default=0.00)
     prepayment = models.DecimalField(decimal_places=2,max_digits=10,verbose_name="Oldindan to'lov summasi",default=0.00)
+    image = models.ImageField(upload_to="orders/",verbose_name="Rasm",null=True,blank=True)
     status = models.CharField(
         max_length=20,
         choices=StatusChoice.choices,
@@ -48,7 +50,7 @@ class Order(models.Model):
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE, related_name='items')
     product = models.ForeignKey(Product, on_delete=models.CASCADE,related_name="items")
-    quantity = models.PositiveIntegerField()
+    quantity = models.PositiveIntegerField(default=0,verbose_name="Buyurtma soni")
 
     created_at = models.DateTimeField(auto_now_add=True)
 

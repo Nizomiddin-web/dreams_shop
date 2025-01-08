@@ -1,0 +1,19 @@
+# Virtual environment papkasi
+venv/
+.env/
+
+# Python tomonidan yaratilgan fayllar
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Log va dependeniyalar
+*.log
+*.sqlite3
+
+# Jupyter Notebook temporary fayllari
+.ipynb_checkpoints/
+
+# OS bilan bog'liq fayllar
+.DS_Store
+Thumbs.db
