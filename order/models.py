@@ -4,7 +4,7 @@ from customer.models import Address, Customer
 from product.models import Product
 
 class StatusChoice(models.TextChoices):
-    GET_TOMORROW = 'get_tomorrow', "🤥 Keyin oladi"
+    GET_TOMORROW = 'get_tomorrow', "📞 Qayta Qo'ng'iroq"
     HOLD = 'hold', "🗳 Zakazga"
     PENDING = 'pending',"📦 Qabul qilindi"
     READY_DELIVERY = 'ready_delivery',"🛍 Dastavkaga Tayyor"

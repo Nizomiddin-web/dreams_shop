@@ -1,5 +1,7 @@
 from decimal import Decimal
 
+import requests
+from django.db import transaction
 from django.db.models.signals import pre_save, post_save, pre_delete
 from django.dispatch import receiver
 
@@ -48,12 +50,39 @@ def update_stock_on_order(sender,instance,**kwargs):
             amount-=instance.discount
             Payment.objects.create(order=instance,amount=amount)
 
-# @receiver(post_save,sender=Order)
-# def update_total_price(sender,instance,created,**kwargs):
-#     if created:
-#         if instance.items.exists():
-#             amount = 0
-#             for order_item in instance.items.all():
-#                 amount += order_item.total_price()
-#             instance.total_price = amount
-#             instance.save()
+# TELEGRAM_BOT_TOKEN = '5209842887:AAHGMkYY2ye6XaFReu9Ex8hNlwKrF7B9yLQ'
+TELEGRAM_BOT_TOKEN = '57977019764:AAHN1vajZMqHHIerVleKPjlROGO8EYDsMTc'
+# TELEGRAM_CHAT_ID = '1987938749'
+TELEGRAM_CHAT_ID = '-1004722321542'
+@receiver(post_save,sender=Order)
+def update_total_price(sender,instance,created,**kwargs):
+    if created:
+        def notify():
+                try:
+                    payment_method_display = instance.get_payment_method_display()
+                    status_display = instance.get_status_display()
+                    product = ""
+                    total_price = f"{int(instance.total_price):,}".replace(","," ") + " so'm"
+                    for item in instance.items.all():
+                        product+=f"{item.product.name},"
+                    message = (
+                        f"<b>Buyurtma</b>\n\n"
+                        f"<b>#ID:</b>{instance.id}\n"
+                        f"<b>👤Mijoz :</b> {instance.customer.full_name()}\n"
+                        f"<b>📞Telefon raqam :</b> {instance.customer.phone_number}\n"
+                        f"<b>💠Address :</b> {instance.address.city}, {instance.address.address_line}\n"
+                        f"<b>📦Mahsulotlar :</b> {product}\n"
+                        f"<b>📊Status :</b> {status_display}\n"
+                        f"<b>To'lov turi :</b> {payment_method_display}\n"
+                        f"<b>💰Jami :</b> {total_price}\n"
+                        f"<b>To'lov qildimi? :</b> {"Ha" if instance.is_paid else "Yo'q"}"
+                    )
+                    url = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
+                    data = {"chat_id": TELEGRAM_CHAT_ID, "text": message,"parse_mode":"HTML"}
+
+                    requests.post(url, data=data)
+                except Exception as e:
+                    print(f"Telegramga xabar yuborishda xatolik: {e}")
+
+        transaction.on_commit(notify)
+
